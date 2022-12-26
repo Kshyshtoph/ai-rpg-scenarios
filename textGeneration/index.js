@@ -7,13 +7,13 @@ class Client {
     email: process.env.OPENAI_EMAIL,
     password: process.env.OPENAI_PASS,
   });
+  lastMessage = {};
   conversationId = "";
   parentMessageId = "";
   constructor() {
     this.initiate();
   }
   async initiate() {
-    // use puppeteer to bypass cloudflare (headful because of captchas)
     await this.api.initSession();
   }
   async message(mes) {
@@ -24,6 +24,9 @@ class Client {
             conversationId: this.conversationId,
             parentMessageId: this.parentMessageId,
           };
+    if (mes == "!!") {
+      return this.lastMessage;
+    }
     console.log(options);
     return await this.api
       .sendMessage(mes, options)
@@ -31,6 +34,7 @@ class Client {
         console.log(a);
         this.conversationId = a.conversationId;
         this.parentMessageId = a.messageId;
+        this.lastMessage = a;
         return a;
       })
       .catch(console.error);

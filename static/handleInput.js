@@ -13,7 +13,7 @@ form.addEventListener("submit", (e) => {
     body,
     headers: [["Content-Type", "application/json"]],
   })
-    .then((res) => res.text())
+    .then((res) => res.json())
     .then((res) => {
       console.log(res);
       const block = document.createElement("div");
@@ -21,6 +21,7 @@ form.addEventListener("submit", (e) => {
       const arr = res.response.split("\n").map((text) => {
         const p = document.createElement("p");
         p.textContent = text;
+        addIlustrator(p);
         return p;
       });
       createInput(block, "parentMessageId", res.messageId);

@@ -10,6 +10,5 @@ const createInput = (root, key, value) => {
   label.textContent = "mark as parent";
   div.appendChild(label);
   div.appendChild(input);
-  main.appendChild(div);
   root.appendChild(div);
 };
